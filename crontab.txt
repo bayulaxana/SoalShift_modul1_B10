@@ -1,0 +1,5 @@
+#crontab no 1
+14 14 14 2 5 /bin/bash /home/pootreth/soal1.sh
+
+#crontab no 5
+2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh
