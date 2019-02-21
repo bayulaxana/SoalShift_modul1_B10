@@ -5,12 +5,7 @@ convert() {
 }
 
 hour=`date +%H`
-minute=`date +%M`
-date=`date +%d`
-month=`date +%m`
-year=`date +%Y`
-
-fname="$hour:$minute $date-$month-$year"
+fname=`date +"%H:%M %d-%m-%Y"`
 log=`cat /var/log/syslog`
 
 lwer=$(($hour + 97))

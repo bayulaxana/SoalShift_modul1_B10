@@ -24,5 +24,3 @@ else
     var=`printf '%s' "$log" | tr $firstChar-za-$lastChar${firstChar^^}-ZA-${lastChar^^} a-zA-Z`
 fi
 printf '%s\n' "$var"
-
-

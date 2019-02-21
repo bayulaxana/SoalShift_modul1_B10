@@ -55,6 +55,131 @@ d. Backup file syslog setiap jam.
 
 e. dan buatkan juga bash script untuk dekripsinya.
 
+### Penyelesaian
+
+**Script untuk enkripsi :**
+
+```
+#!/bin/bash
+
+convert() {
+    printf "\\$(printf "%03o" "$1")"
+}
+
+hour=`date +%H`
+fname=`date +"%H:%M %d-%m-%Y"`
+log=`cat /var/log/syslog`
+
+lwer=$(($hour + 97))
+lwer=$(($lwer % 122))
+if [ $lwer == 0 ]
+then
+    lwer=122
+fi
+
+firstChar=`convert $lwer`
+lastChar=`convert $(($lwer-1))`
+
+if [ $lwer == 97 ]
+then
+    var=`printf '%s' "$log"`
+else
+    var=`printf '%s' "$log" | tr a-zA-Z $firstChar-za-$lastChar${firstChar^^}-ZA-${lastChar^^}`
+fi
+
+printf '%s\n' "$var" > "$fname".txt
+```
+* Hal pertama yang dilakukan adalah meng-ekstrak jam, menit, hari, tanggal, dan tahun dari **date/tanggal**. Setelah didapatkan jam, menit, hari, tanggal, dan tahun, langkah selanjutnya adalah menyiapkan **nama file** nya dalam format **jam:menit tanggal-bulan-tahun**
+
+```
+fname=`date +"%H:%M %d-%m-%Y"`
+```
+> Untuk mendapatkan nilai dari jam, menit, hari, tanggal, dan tahun dapat menggunakan **date +%\<FORMAT>**
+
+* Kemudian, untuk tahapan enkripsi. Tahapannya adalah dengan menambahkan **jam** dengan representasi **ASCII** dari salah satu huruf, yakni **'a'**. Mengapa **'a'**? Karena huruf ini merupakan huruf dasar untuk melakukan enkripsi pada huruf-huruf selanjutnya.
+
+```
+lwer=$(($hour + 97))
+lwer=$(($lwer % 122))
+if [ $lwer == 0 ]
+then
+    lwer=122
+fi
+```
+> Sintaks ```lwer=$(($hour + 97))``` digunakan untuk menambahkan huruf dengan **jam**. Angka 97 adalah representasi **ASCII** dari huruf **'a'**.
+
+* Kemudian dari **ASCII** baru yang telah didapat dari variabel **```lwer```**, dikonversi menjadi karakter menggunakan fungsi **```convert()```**.
+
+```
+convert() {
+    printf "\\$(printf "%03o" "$1")"
+}
+```
+
+* Sintaks dibawah berfungsi untuk mengkonversi huruf **'a'** dan huruf **'z'**.
+
+```
+firstChar=`convert $lwer`
+lastChar=`convert $(($lwer-1))`
+```
+**Lanjutan:**
+
+```
+log=`cat /var/log/syslog`
+    ...
+    ...
+    ...
+if [ $lwer == 97 ]
+then
+    var=`printf '%s' "$log"`
+else
+    var=`printf '%s' "$log" | tr a-zA-Z $firstChar-za-$lastChar${firstChar^^}-ZA-${lastChar^^}`
+fi
+
+printf '%s\n' "$var" > "$fname".txt
+```
+
+* Dari variabel **```log```** yang berisi **syslog**, kemudian isi dari  **```log```** dibuatkan _Back Up_ file dari variabel **```fname```** (jam:menit tanggal-bulan-tahun). If jam menunjukkan **00** atau jam 12 malam, maka tidak perlu di-enkripsi.
+
+> Untuk melakukan enkripsi digunakan _command_ **```tr``` (translate)** dengan mengubah huruf **a-z dan A-Z** menjadi huruf-huruf enkripsinya.
+
+**Script untuk dekripsi :**
+
+```
+#!/bin/bash
+
+convert() {
+    printf "\\$(printf "%03o" "$1")"
+}
+
+hour=`echo $1 | cut -d':' -f 1`
+log=`cat "$1$2"`
+
+lwer=$(($hour + 97))
+lwer=$(($lwer % 122))
+if [ $lwer == 0 ]
+then
+    lwer=122
+fi
+
+firstChar=`convert $lwer`
+lastChar=`convert $(($lwer-1))`
+
+if [ $lwer == 97 ]
+then
+    var=`printf '%s' "$log"`
+else
+    var=`printf '%s' "$log" | tr $firstChar-za-$lastChar${firstChar^^}-ZA-${lastChar^^} a-zA-Z`
+fi
+printf '%s\n' "$var"
+```
+
+* Langkah untuk melakukan dekripsi hampir sama dengan enkripsi, bedanya kita hanya mengambil **jamnya** saja dari nama file menggunakan _command_ cut.
+
+* Untuk dekripsinya, _command_ **```tr```** hanya perlu dibalik saja.
+
+> **Nama file diinputkan berupa argumen**
+
 ### Soal Nomor 5
 
 Buatlah sebuah script bash untuk menyimpan record dalam syslog yang memenuhi
