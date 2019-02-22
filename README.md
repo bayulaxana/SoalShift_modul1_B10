@@ -276,7 +276,7 @@ kriteria berikut:
 buat file awk -> source code saya taruh di Folder Soal 5>soal5.sh 
 
 untuk menjawab soal a dan b, caranya yaitu sebagai berikut:
-![Ini](https://drive.google.com/open?id=1fuPdaBKifM4fX8JyxDtoWItJSGBr886A)
+![Ini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/Soal%205/kunci%20a%20dan%20b.png)
 
 untuk soal c, berikut caranya:)
 
