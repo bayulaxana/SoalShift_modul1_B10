@@ -5,10 +5,14 @@
 Anda diminta tolong oleh teman anda untuk mengembalikan filenya yang telah
 dienkripsi oleh seseorang menggunakan bash script, file yang dimaksud adalah **nature.zip**. Karena terlalu mudah kalian memberikan syarat akan membuka seluruh file tersebut jika pukul **14:14** pada tanggal **14 Februari** atau hari tersebut adalah hari jumat pada bulan Februari.
 
-### Penyelesaian:
-
-* Pertama buat file .sh dimana perintah untuk me-unlock filenya yang corrupt.
-
+## Penyelesaian:
+(untuk source codenya bisa cek di folder Soal 1>soal1.sh
+ - Pertama buat file .sh untuk mendecript file zip tersebut -> menggunakan ```base64 -d```
+ - Lalu reverse hexdump filenya dengan ```xxd -r```
+ - Untuk pengaturan waktunya, edit ```crontab -e``` lalu input perinta berikut(bisa juga dicek di crontab.txt):
+ 
+ ```14 14 2 5 /bin/bash /home/pootreth/soal1.sh```
+  
 ---
 
 ### Soal Nomor 2
@@ -272,13 +276,14 @@ kriteria berikut:
 buat file awk -> source code saya taruh di Folder Soal 5>soal5.sh 
 
 untuk menjawab soal a dan b, caranya yaitu sebagai berikut:
-> '{if($0 ~ /cron/ && $0 !~ /sudo/ && NF < 13) print $0}'
-      
-                    a                    b
+``` '{if($0 ~ /cron/ && $0 !~ /sudo/ && NF < 13) print $0}' ```      
+   
+                     a                     b
+
 
 untuk soal c, berikut caranya:)
->/var/log/syslog > /home/pootreth/modul1/soal5.log
+```/var/log/syslog > /home/pootreth/modul1/soal5.log```
 
 
 untuk soal d, crontabnya bisa dilihat di file "crontab.txt" :)
->2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh
+```2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh```
