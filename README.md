@@ -6,12 +6,13 @@ Anda diminta tolong oleh teman anda untuk mengembalikan filenya yang telah
 dienkripsi oleh seseorang menggunakan bash script, file yang dimaksud adalah **nature.zip**. Karena terlalu mudah kalian memberikan syarat akan membuka seluruh file tersebut jika pukul **14:14** pada tanggal **14 Februari** atau hari tersebut adalah hari jumat pada bulan Februari.
 
 ## Penyelesaian:
-(untuk source codenya bisa cek di folder Soal 1>soal1.sh
+untuk source codenya bisa cek di ![sini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/Soal%201/soal1.sh)
+
  - Pertama buat file .sh untuk mendecript file zip tersebut -> menggunakan ```base64 -d```
  - Lalu reverse hexdump filenya dengan ```xxd -r```
  - Untuk pengaturan waktunya, edit ```crontab -e``` lalu input perinta berikut(bisa juga dicek di crontab.txt):
  
- ```14 14 2 5 /bin/bash /home/pootreth/soal1.sh```
+ ``14 14 2 5 /bin/bash /home/pootreth/soal1.sh``
   
 ---
 
@@ -287,3 +288,4 @@ untuk soal c, berikut caranya:)
 untuk soal d, crontabnya bisa dilihat di file "crontab.txt" :)
 
 ```2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh```
+
