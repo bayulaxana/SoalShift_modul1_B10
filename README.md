@@ -8,7 +8,8 @@ dienkripsi oleh seseorang menggunakan bash script, file yang dimaksud adalah **n
 ## Penyelesaian:
 untuk source codenya bisa cek di ![sini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/Soal%201/soal1.sh)
 
- - Pertama buat file .sh untuk mendecript file zip tersebut -> menggunakan ```base64 -d```
+ - Pertama, unzip file nature.zip, kalo kami unzipnya manual sih.. :)
+ - Kemudian buat file .sh untuk mendecript file zip tersebut -> menggunakan ```base64 -d```
  - Lalu reverse hexdump filenya dengan ```xxd -r```
  - Untuk pengaturan waktunya, edit ```crontab -e``` lalu input perinta berikut(bisa juga dicek di crontab.txt):
  
