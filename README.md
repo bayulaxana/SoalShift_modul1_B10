@@ -276,14 +276,13 @@ kriteria berikut:
 buat file awk -> source code saya taruh di Folder Soal 5>soal5.sh 
 
 untuk menjawab soal a dan b, caranya yaitu sebagai berikut:
-``` '{if($0 ~ /cron/ && $0 !~ /sudo/ && NF < 13) print $0}' ```      
-   
-                     a                     b
-
+![Ini](https://drive.google.com/open?id=1fuPdaBKifM4fX8JyxDtoWItJSGBr886A)
 
 untuk soal c, berikut caranya:)
+
 ```/var/log/syslog > /home/pootreth/modul1/soal5.log```
 
 
 untuk soal d, crontabnya bisa dilihat di file "crontab.txt" :)
+
 ```2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh```
