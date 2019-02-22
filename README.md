@@ -271,7 +271,7 @@ kriteria berikut:
 ## Penyelesaian
 buat file awk -> source code saya taruh di Folder Soal 5>soal5.sh 
 
-untuk menjawab soal a b c, caranya yaitu sebagai berikut:
+untuk menjawab soal a dan b, caranya yaitu sebagai berikut:
 > '{if($0 ~ /cron/ && $0 !~ /sudo/ && NF < 13) print $0}'
       
                     a                    b
@@ -279,4 +279,6 @@ untuk menjawab soal a b c, caranya yaitu sebagai berikut:
 untuk soal c, berikut caranya:)
 >/var/log/syslog > /home/pootreth/modul1/soal5.log
 
+
 untuk soal d, crontabnya bisa dilihat di file "crontab.txt" :)
+>2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh
