@@ -267,3 +267,12 @@ kriteria berikut:
 * c. Masukkan record tadi ke dalam file logs yang berada pada direktori /home/[user]/modul1.
 
 * d. Jalankan script tadi setiap 6 menit dari menit ke 2 hingga 30, contoh 13:02, 13:08, 13:14, dst.
+
+## Penyelesaian
+buat file awk -> source code saya taruh di Folder Soal 5>soal5.sh 
+untuk menjawab soal a b c, caranya yaitu sebagai berikut:
+> '{if($0 ~ /cron/ && $0 !~ /sudo/ && NF < 13) print $0}'
+   --------------     ------------    -------
+          a                 b            c
+          
+untuk soal d, crontabnya bisa dilihat di file "crontab.txt" :)
