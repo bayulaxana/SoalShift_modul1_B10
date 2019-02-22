@@ -274,7 +274,7 @@ kriteria berikut:
 * d. Jalankan script tadi setiap 6 menit dari menit ke 2 hingga 30, contoh 13:02, 13:08, 13:14, dst.
 
 ## Penyelesaian
-buat file awk -> source code saya taruh di Folder Soal 5>soal5.sh 
+buat file awk -> source code bisa cek di ![sini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/Soal%205/soal5.sh)
 
 untuk menjawab soal a dan b, caranya yaitu sebagai berikut:
 
