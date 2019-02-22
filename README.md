@@ -273,19 +273,21 @@ kriteria berikut:
 
 * d. Jalankan script tadi setiap 6 menit dari menit ke 2 hingga 30, contoh 13:02, 13:08, 13:14, dst.
 
-## Penyelesaian
+### Penyelesaian
 buat file awk -> source code bisa cek di ![sini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/Soal%205/soal5.sh)
 
+### keterangan
 untuk menjawab soal a dan b, caranya yaitu sebagai berikut:
 
 ![Ini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/Soal%205/kunci%20a%20dan%20b.png)
 
-untuk soal c, berikut caranya:)
 
-```/var/log/syslog > /home/pootreth/modul1/soal5.log```
+untuk soal c:
+
+```/var/log/syslog > /home/<nama_user>/modul1/soal5.log```
 
 
-untuk soal d, crontabnya bisa dilihat di file "crontab.txt" :)
+untuk soal d, crontabnya bisa dilihat di ![sini](https://github.com/bayulaxana/SoalShift_modul1_B10/blob/master/crontab.txt)  :)
 
-```2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh```
+```2-30/6 * * * * /bin/bash /home/<nama_user>/soal5.sh```
 
