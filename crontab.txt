@@ -1,5 +1,8 @@
 #crontab no 1
-14 14 14 2 5 /bin/bash /home/pootreth/soal1.sh
+14 14 14 2 5 /bin/bash /home/[user]/[direktori Soal Shift]/Soal\ 1/soal1.sh
+
+#crontab no 4
+0 * * * * /bin/bash /home/[user]/[direktori Soal Shift]/Soal\ 4/soal4.sh
 
 #crontab no 5
-2-30/6 * * * * /bin/bash /home/pootreth/soal5.sh
+2-30/6 * * * * /bin/bash /home/[user]/[direktori Soal Shift]/Soal\ 5/soal5.sh

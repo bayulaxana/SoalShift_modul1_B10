@@ -7,8 +7,8 @@ dienkripsi oleh seseorang menggunakan bash script, file yang dimaksud adalah **n
 
 ## Penyelesaian:
 (untuk source codenya bisa cek di folder Soal 1>soal1.sh
- - Pertama buat file .sh untuk mendecript file zip tersebut -> menggunakan ```base64 -d```
- - Lalu reverse hexdump filenya dengan ```xxd -r```
+ - Pertama buat file .sh untuk mendecript file zip tersebut -> menggunakan **```base64 -d```**
+ - Lalu reverse hexdump filenya dengan **```xxd -r```**
  - Untuk pengaturan waktunya, edit ```crontab -e``` lalu input perinta berikut(bisa juga dicek di crontab.txt):
  
  ```14 14 2 5 /bin/bash /home/pootreth/soal1.sh```
@@ -23,9 +23,107 @@ Laporan yang diminta berupa:
 
 * **[ a ] Tentukan negara dengan penjualan(quantity) terbanyak pada tahun 2012.**
 
+    Sintaks awk-nya adalah sebagai berikut:
+
+    ```bash
+    # (a)
+    printf ">> Nomor 2a:\n"
+    awk -F ',' '{
+        if($7 == "2012") { listOfCountry[$1] = listOfCountry[$1] + $10;}
+    }
+
+    END {
+        max=0;
+        country="";
+        for (var in listOfCountry) {
+            if (max < listOfCountry[var]) {
+                max = listOfCountry[var];
+                country=var;
+            }
+        }
+        print country;
+    }' WA_Sales_Products_2012-14.csv
+    ```
+
+    Potongan kode di atas bekerja dengan cara memeriksa kolom 7, yakni kolom tahun yang hanya tahun 2012. Kemudian, menggunakan array dengan indeks **Nama Negara** (kolom 1) dengan menjumlahkannya dengan **_quantity_** (kolom 10). Setelah pencarian selesai, dicari negara dengan kuantitas tertinggi pada blok **END**.
+
 * **[ b ] Tentukan tiga product line yang memberikan penjualan(quantity) terbanyak pada soal poin a.**
 
+    Sintaks awk-nya adalah sebagai berikut:
+
+    ```bash
+    # (b)
+    printf "\n>> Nomor 2b:\n"
+    awk -F ',' '{
+        if($7 == "2012" && $1 == "United States") { 
+            productLine[$4] = productLine[$4] + $10;
+        }
+    }
+
+    END {
+        for (var in productLine) {
+            print productLine[var] " " var;
+        }
+    }' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <= 3 {print $2, $3}'
+    ```
+
+    Setelah didapatkan **negara** pada poin (a), selanjutnya adalah menjumlahkan **Product Line** (kolom 4) dengan kuantitasnya. Ini disimpan menggunakan array dengan indeks **Product Line**. Kemudian hasilnya diurutkan berdasarkan kuantitasnya dan di-print tiga teratas.
+
+    > Untuk mengurutkan dapat menggunakan _command_ **```sort -nr```** (numerical,reverse) dan untuk mencetak hanya tiga baris menggunakan **```awk NR <=3```**.
+
 * **[ c ] Tentukan tiga product yang memberikan penjualan(quantity) terbanyak berdasarkan tiga product line yang didapatkan pada soal poin b.**
+
+    ```bash
+    # (c)
+    printf "\n>> Nomor 2c:\n"
+
+    printf "Personal Accessories : \n"
+    awk -F ',' '{
+        if ($1 == "United States" && $7 == "2012") {
+            if ($4 == "Personal Accessories") {
+                product[$6] += $10;
+            }
+        }
+    }
+
+    END {
+        for (var in product) {
+            print product[var], var;
+        }
+    }' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <=3 {print $2, $3, $4}'
+
+    printf "\nCamping Equipment : \n"
+    awk -F ',' '{
+        if ($1 == "United States" && $7 == "2012") {
+            if ($4 == "Camping Equipment") {
+                product[$6] += $10;
+            }
+        }
+    }
+
+    END {
+        for (var in product) {
+            print product[var], var;
+        }
+    }' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <=3 {print $2, $3, $4}'
+
+    printf "\nOutdoor Protection : \n"
+    awk -F ',' '{
+        if ($1 == "United States" && $7 == "2012") {
+            if ($4 == "Outdoor Protection") {
+                product[$6] += $10;
+            }
+        }
+    }
+
+    END {
+        for (var in product) {
+            print product[var], var;
+        }
+    }' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <=3 {print $2, $3, $4}'
+    ```
+
+    Prinsipnya sama dengan 2(b) tadi. Setelah didapatkan tiga _Product Line_ teratas, kemudian dicetak tiga _Product_ teratas berdasarkan tiap _Product Line_. Cara kerjanya mirip dengan Soal 2(b).
 
 ---
 
@@ -256,6 +354,8 @@ berikut:
 * Untuk dekripsinya, _command_ **```tr```** hanya perlu dibalik saja.
 
     > **Nama file diinputkan berupa argumen**
+
+**Untuk crontab nomor 4, dapat dilihat pada file crontab.txt**
 
 ---
 
