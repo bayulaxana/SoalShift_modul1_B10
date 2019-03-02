@@ -140,6 +140,8 @@ sebagai berikut:
 
 * **Jika tidak ditemukan file password1.txt maka password acak tersebut disimpan pada file bernama password1.txt**
 
+    + Pertama kali yang dilakukan adalah memeriksa apakah dalam direktori tersebut ada file **password1.txt** atau tidak. Scriptnya adalah sebagai berikut.
+
     ```bash
     fname=""
     i=1
@@ -155,7 +157,6 @@ sebagai berikut:
     done
     ```
 
-    + Pertama kali yang dilakukan adalah memeriksa apakah dalam direktori tersebut ada file **password1.txt** atau tidak. Scriptnya adalah sebagai berikut.
         
         > Potongan script di atas bekerja dengan cara melakukan loop hingga nama file **password[i].txt** tidak ditemukan.
 
