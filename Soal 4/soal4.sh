@@ -25,4 +25,4 @@ else
     var=`printf '%s' "$log" | tr a-zA-Z $firstChar-za-$lastChar${firstChar^^}-ZA-${lastChar^^}`
 fi
 
-printf '%s\n' "$var" > "$fname".txt
+printf '%s\n' "$var" > "$fname"

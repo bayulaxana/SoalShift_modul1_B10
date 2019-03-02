@@ -30,7 +30,7 @@ END {
     for (var in productLine) {
         print productLine[var] " " var;
     }
-}' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <= 3 {print $1, $2, $3}'
+}' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <= 3 {print $2, $3}'
 
 # (c)
 printf "\n>> Nomor 2c:\n"
@@ -78,4 +78,4 @@ END {
     for (var in product) {
         print product[var], var;
     }
-}' WA_Sales_Products_2012-14.csv | sort -nr
+}' WA_Sales_Products_2012-14.csv | sort -nr | awk 'NR <=3 {print $2, $3, $4}'

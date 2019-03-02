@@ -142,16 +142,27 @@ sebagai berikut:
 
     + Pertama kali yang dilakukan adalah memeriksa apakah dalam direktori tersebut ada file **password1.txt** atau tidak. Scriptnya adalah sebagai berikut.
         ```bash
-        i=1
         while [ true ]
         do
-            check=`ls "password"$i".txt" 2> /dev/null`
-            if [ ${#check} == 0 ]
+            num=0
+            lower=0
+            upper=0
+            exist=1
+            makePassword
+            passCheck=`grep -w $newPass password*.txt 2> /dev/null`
+            if [ ${#passCheck} == 0 ]
             then
-                fname="password"$i".txt"
-                break
+                exist=0
             fi
-            i=`expr $i + 1`
+
+            for (( i=0; i<12; i++ )) 
+            do
+                x=`printf "%d\n" "'${newPass:$i:1}"`
+                if [ $x -ge 97 -a $x -le 122 ]; then lower=1;
+                elif [ $x -ge 65 -a $x -le 90 ]; then upper=1;
+                elif [ $x -ge 48 -a $x -le 57 ]; then num=1; fi
+            done
+            if [ $lower == 1 -a $upper == 1 -a $num == 1 -a $exist == 0 ]; then break; fi
         done
         ```
         > Potongan script di atas bekerja dengan cara melakukan loop hingga nama file **password[i].txt** tidak ditemukan.
@@ -164,7 +175,7 @@ sebagai berikut:
 
     + Potongan kode sebelumnya juga sudah mengatasi apabila salah satu file dihapus, namun akan tidak akan terlewatkan jika dibuat baru lagi.
 
-* **Password yang dihasilkan tidak boleh sama.**
+* **Password yang dihasilkan mengandung angka, huruf kecil dan huruf besar dan tidak boleh sama.**
 
     ```bash
     passCheck=`grep -w $newPass password*.txt 2> /dev/null`
@@ -196,75 +207,30 @@ sebagai berikut:
         fi
         i=`expr $i + 1`
     done
-    makePassword
-    passCheck=`grep -w $newPass password*.txt 2> /dev/null`
-    while [ ${#passCheck} != 0 ]
+
+    while [ true ]
     do
+        num=0
+        lower=0
+        upper=0
+        exist=1
         makePassword
         passCheck=`grep -w $newPass password*.txt 2> /dev/null`
+        if [ ${#passCheck} == 0 ]
+        then
+            exist=0
+        fi
+
+        for (( i=0; i<12; i++ )) 
+        do
+            x=`printf "%d\n" "'${newPass:$i:1}"`
+            if [ $x -ge 97 -a $x -le 122 ]; then lower=1;
+            elif [ $x -ge 65 -a $x -le 90 ]; then upper=1;
+            elif [ $x -ge 48 -a $x -le 57 ]; then num=1; fi
+        done
+        if [ $lower == 1 -a $upper == 1 -a $num == 1 -a $exist == 0 ]; then break; fi
     done
     echo $newPass > $fname
-    ```
-
-* Untuk membuat password secara random yang mengandung huruf kecil, huruf besar, dan angka menggunakan sintaks:
-
-    ```bash
-    makePassword() {
-        newPass=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)
-    }
-    ```
-
----
-
-### Soal Nomor 4
-
-Lakukan backup file syslog setiap jam dengan format nama file “jam:menit tanggal-bulan-tahun”. Isi dari file backup terenkripsi dengan konversi huruf (string
-manipulation) yang disesuaikan dengan jam dilakukannya backup misalkan sebagai
-berikut:
-
-* **Huruf b adalah alfabet kedua, sedangkan saat ini waktu menunjukkan pukul 12, sehingga huruf b diganti dengan huruf alfabet yang memiliki urutan ke 12+2 = 14.**
-
-* **Hasilnya huruf b menjadi huruf n karena huruf n adalah huruf ke empat belas, dan seterusnya.**
-
-* **setelah huruf z akan kembali ke huruf a**
-
-* **Backup file syslog setiap jam.**
-
-* **dan buatkan juga bash script untuk dekripsinya.**
-
-### Penyelesaian
-
-* ### Script untuk Enkripsi
-
-    ```bash
-    #!/bin/bash
-
-    convert() {
-        printf "\\$(printf "%03o" "$1")"
-    }
-
-    hour=`date +%H`
-    fname=`date +"%H:%M %d-%m-%Y"`
-    log=`cat /var/log/syslog`
-
-    lwer=$(($hour + 97))
-    lwer=$(($lwer % 122))
-    if [ $lwer == 0 ]
-    then
-        lwer=122
-    fi
-
-    firstChar=`convert $lwer`
-    lastChar=`convert $(($lwer-1))`
-
-    if [ $lwer == 97 ]
-    then
-        var=`printf '%s' "$log"`
-    else
-        var=`printf '%s' "$log" | tr a-zA-Z $firstChar-za-$lastChar${firstChar^^}-ZA-${lastChar^^}`
-    fi
-
-    printf '%s\n' "$var" > "$fname".txt
     ```
 * Hal pertama yang dilakukan adalah meng-ekstrak jam, menit, hari, tanggal, dan tahun dari **date/tanggal**. Setelah didapatkan jam, menit, hari, tanggal, dan tahun, langkah selanjutnya adalah menyiapkan **nama file** nya dalam format **jam:menit tanggal-bulan-tahun**
 
