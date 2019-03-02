@@ -140,31 +140,23 @@ sebagai berikut:
 
 * **Jika tidak ditemukan file password1.txt maka password acak tersebut disimpan pada file bernama password1.txt**
 
-    + Pertama kali yang dilakukan adalah memeriksa apakah dalam direktori tersebut ada file **password1.txt** atau tidak. Scriptnya adalah sebagai berikut.
-        ```bash
-        while [ true ]
-        do
-            num=0
-            lower=0
-            upper=0
-            exist=1
-            makePassword
-            passCheck=`grep -w $newPass password*.txt 2> /dev/null`
-            if [ ${#passCheck} == 0 ]
-            then
-                exist=0
-            fi
+    ```bash
+    fname=""
+    i=1
+    while [ true ]
+    do
+        check=`ls "password"$i".txt" 2> /dev/null`
+        if [ ${#check} == 0 ]
+        then
+            fname="password"$i".txt"
+            break
+        fi
+        i=`expr $i + 1`
+    done
+    ```
 
-            for (( i=0; i<12; i++ )) 
-            do
-                x=`printf "%d\n" "'${newPass:$i:1}"`
-                if [ $x -ge 97 -a $x -le 122 ]; then lower=1;
-                elif [ $x -ge 65 -a $x -le 90 ]; then upper=1;
-                elif [ $x -ge 48 -a $x -le 57 ]; then num=1; fi
-            done
-            if [ $lower == 1 -a $upper == 1 -a $num == 1 -a $exist == 0 ]; then break; fi
-        done
-        ```
+    + Pertama kali yang dilakukan adalah memeriksa apakah dalam direktori tersebut ada file **password1.txt** atau tidak. Scriptnya adalah sebagai berikut.
+        
         > Potongan script di atas bekerja dengan cara melakukan loop hingga nama file **password[i].txt** tidak ditemukan.
 
 * **Jika file password1.txt sudah ada maka password acak baru akan disimpan pada file bernama password2.txt dan begitu seterusnya.**
@@ -177,12 +169,28 @@ sebagai berikut:
 
 * **Password yang dihasilkan mengandung angka, huruf kecil dan huruf besar dan tidak boleh sama.**
 
-    ```bash
-    passCheck=`grep -w $newPass password*.txt 2> /dev/null`
-    while [ ${#passCheck} != 0 ]
+    ```bash        
+    while [ true ]
     do
+        num=0
+        lower=0
+        upper=0
+        exist=1
         makePassword
         passCheck=`grep -w $newPass password*.txt 2> /dev/null`
+        if [ ${#passCheck} == 0 ]
+        then
+            exist=0
+        fi
+
+        for (( i=0; i<12; i++ )) 
+        do
+            x=`printf "%d\n" "'${newPass:$i:1}"`
+            if [ $x -ge 97 -a $x -le 122 ]; then lower=1;
+            elif [ $x -ge 65 -a $x -le 90 ]; then upper=1;
+            elif [ $x -ge 48 -a $x -le 57 ]; then num=1; fi
+        done
+        if [ $lower == 1 -a $upper == 1 -a $num == 1 -a $exist == 0 ]; then break; fi
     done
     ```
 
